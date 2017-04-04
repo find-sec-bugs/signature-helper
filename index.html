@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<head>
+<meta charset="utf-8" />
+<title>Find Security Bugs - Signature Helper</title>
+<link rel="stylesheet" type="text/css" href="assets/built-editor/built-editor.css"/>
+<link rel="stylesheet" type="text/css" href="assets/style.css">
+<link rel="stylesheet" type="text/css" href="assets/loader.css">
+<link rel="stylesheet" type="text/css" href="assets/esprima.foundation.min.css">
+<style>
+textarea {
+  white-space: pre;
+  overflow: scroll;
+  font-size: 10pt;
+  font-family: 'Droid Sans Mono', Menlo, Consolas, 'Courier New', Courier, monospace, sans-serif;
+}
+.subheader {
+  text-align: center;
+}
+</style>
+
+</head>
+<body>
+  <div id="spinner" class="loading_box" style="display: hidden"><br/><br/><br/><br/><center><h2>Parsing code...</h2></center><div class="loader"></div></div>
+  <!-- Title -->
+  <div class="row title">
+  <h5 class="subheader">Find Security Bugs - Signature Helper<sup>Beta</sup></h5>
+  </div>
+
+  <!-- Main content -->
+  <div class="row">
+    <h4>Code of the API</h4>
+    <div class="twelve columns">
+      <pre id="editor" class="editor" data-editor-lang="java" style="height: 450px">
+package org.hibernate;
+
+public interface Session {
+    Criteria createCriteria(Class userEntityClass);
+
+    Query createQuery(String hqlQuery);
+
+    SQLQuery createSQLQuery(String sqlQuery);
+}
+</pre>
+      <div id="info" class="alert-box secondary">Ready.</div>
+    </div>
+    <!--<div class="twelve columns">
+      <textarea wrap="off" id="syntax" rows="30" readonly>Loading...</textarea>
+    </div>-->
+
+    <h4>Generated Sink Configuration</h4>
+    <div class="twelve columns">
+      <textarea wrap="off" id="generatedOutput" rows="20" readonly></textarea>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="row copyright">
+    <div class="six columns">
+      <p><a href="https://github.com/mazko/jsjavaparser">JsJavaParser</a> created and maintained by 
+      <a href="mailto:o.mazko@mail.ru?subject=jsjavaparser&amp;body=Hello%2C%20Oleg%20Mazko%20%21" onmouseover="var split = this.href.split('?'); split[0] = split[0].replace('%20%5Bat%5D%20','@'); this.href = split.join('?');" rel="nofollow">Oleg Mazko
+      </a>
+      </p>
+    </div>
+    <div class="six columns">
+      <ul class="link-list right">
+        <li><a href="https://find-sec-bugs.github.io/">Find Security Bugs</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <script src="lib/javaparser7.min.js"></script>
+  <script src="assets/built-editor/built-editor.min.js"></script>
+  <script src="assets/built-editor/stylers/text_x-java-source/syntax.min.js"></script>
+  <script src="parse.js"></script>
+
+</body>
+</html>
