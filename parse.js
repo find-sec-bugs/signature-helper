@@ -82,6 +82,8 @@
             case "SimpleType":
                 return findFullType(type.name.identifier, codeParsed);
         }
+
+        return "??";
     }
 
     function showGeneratedConfig(configToPrint) {
@@ -99,7 +101,6 @@
 
             for(var imethod in type.bodyDeclarations) {
                 var method = type.bodyDeclarations[imethod];
-                //console.info("Method"+method.name.identifier);
 
                 var typesSignature = "";
                 var stringParams = new Array();
@@ -117,11 +118,14 @@
                         stackDepth++;
                     }
                 }
+                
+                var returnType = getType(method.returnType2,codeParsed);
 
                 var injectatableIndex = stringParams.map(function (value) {
                   return stackDepth-value-1;
                 }).sort().join(",")
-                showGeneratedConfig(packageName+"/"+className+"."+method.name.identifier+"("+typesSignature+"):"+injectatableIndex);
+                showGeneratedConfig(packageName+"/"+className+"."+method.name.identifier+
+                    "("+typesSignature+")"+returnType+":"+injectatableIndex);
             }
         }
     }
