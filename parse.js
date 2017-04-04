@@ -17,6 +17,7 @@
     }
 
     function getFullName(node){
+        if(node == null) return "??";
         var packageName = "";
 
         if(node.hasOwnProperty("identifier")) {
@@ -61,6 +62,7 @@
 
 
     function getType(type, codeParsed) {
+        if(type == undefined) return "??";
         switch (type.node) {
             case "ArrayType":
                 return "["+getType(type.componentType);
@@ -81,6 +83,9 @@
                 }
             case "SimpleType":
                 return findFullType(type.name.identifier, codeParsed);
+            case "ParameterizedType":
+                var mainType = getType(type.type,codeParsed)
+                return mainType;
         }
 
         return "??";
@@ -102,6 +107,8 @@
             for(var imethod in type.bodyDeclarations) {
                 var method = type.bodyDeclarations[imethod];
 
+                if(method.node != "MethodDeclaration") continue;
+
                 var typesSignature = "";
                 var stringParams = new Array();
                 var stackDepth = 0;
@@ -118,7 +125,6 @@
                         stackDepth++;
                     }
                 }
-                
                 var returnType = getType(method.returnType2,codeParsed);
 
                 var injectatableIndex = stringParams.map(function (value) {
