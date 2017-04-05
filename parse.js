@@ -36,28 +36,41 @@
     function findFullType(className, codeParsed) {
         //Class that will not have imports
         switch (className) {
-            case "String":
-            case "Character":
             case "Byte":
-            case "Integer":
-            case "Long":
+            case "Character":
+            case "CharSequence":
             case "Double":
-            case "Class":
+            case "Enum":
+            case "Float":            case "Integer":
+            case "Iterable":
+            case "Number":
+            case "Long":
+            case "Object":
+
+            case "String":
+            case "StringBuilder":
+            case "StringBuffer":
+            case "Thread":
+            case "Throwable":
+            case "Exception":
                 return "Ljava/lang/"+className+";"
 
         }
 
-        var imports = codeParsed.imports;
-        for(var import_idx in imports) {
-            var fullImport = getFullName(imports[import_idx].name);
-            //console.log(fullImport);
-            if(fullImport.endsWith("."+className)) {
-                return "L"+fullImport+";";
-            }
-        }
 
-        var packageName = getFullName(codeParsed.package).replace(/\./g,"/");
-        return "L"+packageName+"/"+className+";";
+        if(codeParsed.hasOwnProperty("imports")) {
+            var imports = codeParsed.imports;
+            for(var import_idx in imports) {
+                var fullImport = getFullName(imports[import_idx].name);
+                //console.log(fullImport);
+                if(fullImport.endsWith("."+className)) {
+                    return "L"+fullImport+";";
+                }
+            }
+        
+            var packageName = getFullName(codeParsed.package).replace(/\./g,"/");
+            return "L"+packageName+"/"+className+";";
+        }
     }
 
 
@@ -65,7 +78,7 @@
         if(type == undefined) return "??";
         switch (type.node) {
             case "ArrayType":
-                return "["+getType(type.componentType);
+                return "["+getType(type.componentType,codeParsed);
             case "PrimitiveType":
                 switch (type.primitiveTypeCode)
                 {
@@ -125,7 +138,7 @@
                         stackDepth++;
                     }
                 }
-                var returnType = getType(method.returnType2,codeParsed);
+                var returnType = getType(method.returnType2,codeParsed).replace(/\./g,"/");
 
                 var injectatableIndex = stringParams.map(function (value) {
                   return stackDepth-value-1;
