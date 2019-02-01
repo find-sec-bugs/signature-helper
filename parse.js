@@ -64,7 +64,7 @@
                 var fullImport = getFullName(imports[import_idx].name);
                 //console.log(fullImport);
                 if(fullImport.endsWith("."+className)) {
-                    return "L"+fullImport+";";
+                    return "L"+fullImport.replace(/\./g,"/")+";";
                 }
             }
         
